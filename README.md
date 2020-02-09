@@ -1,2 +1,9 @@
-# co
-Container Orchestration: these labs show the benefits of containers and orchestration, especially OpenShift.  
+
+# IBM Container Orchestration Workshop
+
+Updated in February 2020
+
+![img](images/image-20181018184328603.png)
+
+
+
