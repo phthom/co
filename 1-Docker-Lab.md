@@ -242,7 +242,7 @@ Did you notice how quickly the second instance started? There was no need to dow
 
 ### 9. Two couchDB containers  
 
-`docker ps | grep couchdb`
+`docker ps -a`
 
 Outpout:
 
