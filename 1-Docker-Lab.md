@@ -11,11 +11,13 @@ This set of instructions requires that docker is already installed and docker co
 
 **Note:** 
 
-> This lab assumes that you have a Linux VM provided by the instructor. To get access to that provided VM (where ip address and root password are provided by the instructor):
+> This lab assumes that you have a Linux VM provided by the instructor. To get access to that provided VM (where ip address and labuser password are provided by the instructor):
 
-`ssh root@ipaddress`
+`ssh labuser<xx>@ipaddress`
 
-Or you can also use your own Docker running on your laptop with a recent version. 
+Or you can also use your own Docker running on your **laptop** with a recent version. 
+
+**Don't forget to use your number <xx> in some instructions.** 
 
 
 
@@ -36,105 +38,79 @@ Output:
 
 ```bash
 # docker version
-Client:
- Version:           18.06.2-ce
- API version:       1.38
- Go version:        go1.10.3
- Git commit:        6d37f41
- Built:             Sun Feb 10 03:48:06 2019
+Client: Docker Engine - Community
+ Version:           19.03.8
+ API version:       1.40
+ Go version:        go1.12.17
+ Git commit:        afacb8b7f0
+ Built:             Wed Mar 11 01:25:46 2020
  OS/Arch:           linux/amd64
  Experimental:      false
 
-Server:
+Server: Docker Engine - Community
  Engine:
-  Version:          18.06.2-ce
-  API version:      1.38 (minimum version 1.12)
-  Go version:       go1.10.3
-  Git commit:       6d37f41
-  Built:            Sun Feb 10 03:46:30 2019
+  Version:          19.03.8
+  API version:      1.40 (minimum version 1.12)
+  Go version:       go1.12.17
+  Git commit:       afacb8b7f0
+  Built:            Wed Mar 11 01:24:19 2020
   OS/Arch:          linux/amd64
   Experimental:     false
+ containerd:
+  Version:          1.2.13
+  GitCommit:        7ad184331fa3e55e52b890ea95e65ba581ae3429
+ runc:
+  Version:          1.0.0-rc10
+  GitCommit:        dc9208a3303feef5b3839f4323d9beb36df0a9dd
+ docker-init:
+  Version:          0.18.0
+  GitCommit:        fec3683
+
 ```
 
-The Docker version could be different. 
+The Docker version could be different. Notice that this version is compliant with containerd and runc. 
 
 
 
 ### 2. Run your first container
 
-As with all new computer things, it is obligatory that we start with "hello-world"
+As with all new computer things, it is mandatory that we start with "helloibm".
 
-`docker run hello-world`
+> Please replace <xx> with your number. In the examples, I always specified 99 that doesn't exit.
+
+`docker run phthom/helloibm<xx>`
 
 Output:
 
 ```bash
-# docker run hello-world
-Unable to find image 'hello-world:latest' locally
-latest: Pulling from library/hello-world
-1b930d010525: Pull complete 
-Digest: sha256:2557e3c07ed1e38f26e389462d03ed943586f744621577a99efb77324b0fe535
-Status: Downloaded newer image for hello-world:latest
+# docker run phthom/helloibm99
+Unable to find image 'phthom/helloibm99:latest' locally
+latest: Pulling from phthom/helloibm99
+Digest: sha256:9fc842c8dce0f91cf4d38920f165edf66916a5f24f8d10556e9e6477408db859
+Status: Downloaded newer image for phthom/helloibm99:latest
+Say Hello to IBM Clouds
 
-Hello from Docker!
-This message shows that your installation appears to be working correctly.
-
-To generate this message, Docker took the following steps:
- 1. The Docker client contacted the Docker daemon.
- 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
-    (amd64)
- 3. The Docker daemon created a new container from that image which runs the
-    executable that produces the output you are currently reading.
- 4. The Docker daemon streamed that output to the Docker client, which sent it
-    to your terminal.
-
-To try something more ambitious, you can run an Ubuntu container with:
- $ docker run -it ubuntu bash
-
-Share images, automate workflows, and more with a free Docker ID:
- https://hub.docker.com/
-
-For more examples and ideas, visit:
- https://docs.docker.com/get-started/
 ```
 
    
 
- > Notice the message `Unable to find image 'hello-world:latest' locally` First you see that the image was automatically downloaded without any additional commands. Second the version `:latest` was added to the name of the image. We did not specify a version for this image.
+The image was run and the result is "Say Hello to IBM Clouds".
+
+ > Notice the message `Unable to find image 'phthom/helloibm99:latest' locally` First you see that the image was automatically downloaded without any additional commands. Second the version `:latest` was added to the name of the image. We did not specify a version for this image.
 
 
 
-### 3. Rerun "hello-world" 
+### 3. Rerun "helloibm" 
 
-Notice that the image is not pulled down again. It already exists locally, so it is run.
+Notice that the image is not pulled down again. It already exists locally in your file system, so it is run.
 
-`docker run hello-world`
+`docker run phthom/helloibm<xx>`
 
 Output:
 
 ```bash
-# docker run hello-world
-
-Hello from Docker!
-This message shows that your installation appears to be working correctly.
-
-To generate this message, Docker took the following steps:
- 1. The Docker client contacted the Docker daemon.
- 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
-    (amd64)
- 3. The Docker daemon created a new container from that image which runs the
-    executable that produces the output you are currently reading.
- 4. The Docker daemon streamed that output to the Docker client, which sent it
-    to your terminal.
-
-To try something more ambitious, you can run an Ubuntu container with:
- $ docker run -it ubuntu bash
-
-Share images, automate workflows, and more with a free Docker ID:
- https://hub.docker.com/
-
-For more examples and ideas, visit:
- https://docs.docker.com/get-started/
+# docker run phthom/helloibm99
+Say Hello to IBM Clouds
 ```
 
 
@@ -142,66 +118,77 @@ For more examples and ideas, visit:
 
 ### 4.  Show the image
 
-List all the images:
+List all your helloibm images that are stored locally:
 
- `docker images hello-world`
+ `docker images phthom/helloibm<xx>`
 
 Output:
 
 ```bash
-# docker images
+# docker images phthom/helloibm99
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
-hello-world         latest              fce289e99eb9        3 weeks ago         1.84kB
+phthom/helloibm99   latest              61174b19efe3        26 minutes ago      82.9MB
 ```
 
 
 
 
-### 5. From where was the `hello-world` image pulled? 
+### 5. From where was the `helloibm` image pulled? 
 
-Go to `https://hub.docker.com/_/hello-world/` and you can read about this image. Docker-hub is a registry that holds docker images for use. Docker-hub is not the only registry, IBM Cloud Public can serve as a docker registry. You can also have (or define) private registries.
+Go to `https://hub.docker.com/r/phthom/helloibm<xx>` and you can read about this image. Docker-hub is a registry that holds docker images for use. Docker-hub is not the only registry, IBM Cloud Public can serve as a docker registry. You can also have (or define) private registries.
 
-![dockerHub](./images/dockerhubhello.png) 
+![image-20200515172241323](images/image-20200515172241323-9556161.png)
+
+In a container registry, things can be organised in namespaces. "phthom" which is also my user name in Docker Hub, is my namespace. To get access to a specific image, you have to refer to **namespace/image:tag**. This rule can also be applied on other public or private clouds. 
 
 
 
 ### 6. Run a new container
 
-This image is a typical image to get started with Docker. When an image is run it usually continues to run. 
+This image is a typical image to get started with Docker. When an image is run it usually continues to run like for a database or a web server.  
 
-The running image is called a **container**. Let us run a more typical image; This image contains the noSQL database **couchDB**. As there is no image containing couchDB on your laptop, you will first pull it from the Docker Hub and then once all the layers have been downloaded and extracted, you will run it.
+The running image is called a **container**. Let us run a more typical image; This image contains a typical Node.JS web server with the express library. As there is no image containing Node.JS on your laptop or VM, you will first pull it from the Docker Hub and then once all the layers have been downloaded and extracted, you will run it.
 
-`docker run -d couchdb -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=password`
+Thanks to **Aco Vidovic** for his chat application (<https://github.com/Acovid/chat-app>) that we are using now:
+
+`docker run -d -p 88<xx>:3000 phthom/chatibm<xx>`
 
 Output:
 
 ```bash
-# docker run -d couchdb
-Unable to find image 'couchdb:latest' locally
-latest: Pulling from library/couchdb
-5e6ec7f28fb7: Downloading [===========================>                       ]  12.17MB/22.5MB
-70113ec2139e: Download complete 
-80648cf0a24a: Download complete 
-e0794329addc: Download complete 
-6d60e1d083fc: Download complete 
-708127226509: Download complete 
-4eddfd85791c: Downloading [==========>                                        ]  11.24MB/54.15MB
-90beac1647b7: Download complete 
-838fd0abf15f: Download complete 
-c7df822199b0: Download complete 
-ca2c2d17695c: Download complete 
-dbb7188da17c: Download complete 
+# docker run -d phthom/chatibm99
+Unable to find image 'phthom/chatibm99:latest' locally
+latest: Pulling from phthom/chatibm99
+df0176f97d41: Pull complete 
+Digest: sha256:637e36d6120cbe20445a12675ffb7d1d241cd9b398b932a5d79d2a13ebbaec1b
+Status: Downloaded newer image for phthom/chatibm99:latest
+47b346f0cf21360328f292379524939aed3e9edfad29063de44f82f11798b699
 ```
 
- The output above was captured while the image was still downloading from docker-hub. When the download is complete,  you don't see anything from the container, like with hello-world. Instead you see a long hex id like `272d409a806c485cfe83727f895093ee2fcd586a6cf98455e6216c9fc95af24d`. **This is the long id of the container**.
+When the download is complete,  you don't see anything from the container, like with helloibm. Instead you see a long hex id like `47b346f0cf21360328f292379524939aed3e9edfad29063de44f82f11798b699`. **This is the long id of the container**.
+
+Also notice that the **-d** in the run command with launch the container as **detached** and so you can get the prompt when the command has been completed.
+
+The **-p** stands for port mapping : in that case we will use the port 88<xx> outside of the container to map the internal application port (3000). 
+
+If you go to your browser you will be able to get access to the application:
+
+Get the **IP address** of the VM where you are running:
 
 ```bash
-Digest: sha256:7f3e6372ff8a87f1a11c63a787ec7dceda85a8fe80005d6c5bbdfa6a6bcde73e
-Status: Downloaded newer image for couchdb:latest
-272d409a806c485cfe83727f895093ee2fcd586a6cf98455e6216c9fc95af24d
+curl ifconfig.co
+158.176.128.250
 ```
 
-Also notice that the -d in the run command with launch the container as **detached** and so you can get the prompt when the command has been completed.
+Then in your browser, type:
+
+`http://<IPADDRESS>:88<xx>`
+
+You should get :
+
+![image-20200520224748456](images/image-20200520224748456-0007668.png)
+
+You can play with this chat application. 
 
 
 
@@ -209,17 +196,17 @@ Also notice that the -d in the run command with launch the container as **detach
 
 Notice only the first part of that long hex id is displayed. Typically this is more than enough to uniquely identify that container. `docker ps` provides information about when the container was created, how long it has been running, then name of the image as well as the name of the container. Note that each container must have a unique name. You can specify a name for each container as long as it is unique.
 
-`docker ps | grep couchdb` 
+`docker ps | grep chatibm<xx>` 
 
 Output:
 
 ```bash
-# docker ps               
+# docker ps | grep chatibm99              
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                          NAMES
-272d409a806c        couchdb             "tini -- /docker-ent…"   3 minutes ago       Up 3 minutes        4369/tcp, 5984/tcp, 9100/tcp   xenodochial_heisenberg
+c4b9d38c11c4        phthom/chatibm99     "/nodejs/bin/node we…"   4 minutes ago       Up 4 minutes        3000/tcp            distracted_lederberg
 ```
 
-You will notice that the name is auto-generated by Docker:  **xenodochial_heisenberg**. So to avoid this, a good practice is to always give a name to a container with the **--name** parameter.
+You will notice that the name is auto-generated by Docker:  **distracted_lederberg**. So to avoid this, a good practice is to always give a name to a container with the **--name** parameter.
 
 
 
@@ -228,62 +215,63 @@ You will notice that the name is auto-generated by Docker:  **xenodochial_heisen
 
 Launch another container for the couchdb image.
 
-`docker run -d couchdb -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=password`
+`docker run -d phthom/chatibm<xx>`
+
 Output:
 
 ```bash
-# docker run -d couchdb
-fd511f9cd8965395bfcb652d6a10b5eec5c0b4479950064d7e238420c8099a6b
+# docker run -d phthom/chatibm99
+2335bedc0fbb3cab083ed33c8b8ed2d24e56a6449f79008254a34571268377d9
 ```
 
-Did you notice how quickly the second instance started? There was no need to download the image this time. The id of the container is show after is has started. You can notice that we are reusing all the layers already downloaded when we first pull the image.
+Did you notice how quickly the second instance started? There was no need to download the image from the registry this time. The id of the container is shown after it has been started. You can notice that we are reusing all the layers already downloaded when we first pull the image.
 
 
 
-### 9. Two couchDB containers  
+### 9. Two web server containers  
 
-`docker ps -a`
+`docker ps | grep chatibm<xx>`
 
 Outpout:
 
 ```bash
-# docker ps
-CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                          NAMES
-fd511f9cd896        couchdb             "tini -- /docker-ent…"   4 minutes ago       Up 4 minutes        4369/tcp, 5984/tcp, 9100/tcp   cocky_jones
-272d409a806c        couchdb             "tini -- /docker-ent…"   13 minutes ago      Up 13 minutes       4369/tcp, 5984/tcp, 9100/tcp   xenodochial_heisenberg
+# docker ps | grep chatibm99
+2335bedc0fbb        phthom/chatibm99     "/nodejs/bin/node we…"   2 minutes ago       Up 2 minutes        3000/tcp            epic_perlman
+04f150df58c4        phthom/chatibm99     "/nodejs/bin/node we…"   12 minutes ago      Up 12 minutes       3000/tcp            brave_ardinghelli
 ```
 
+The IDs and the generated names will be different.
 
 
 
-### 10. Similar couchDB instances 
+
+### 10. Similar web server instances 
 
 The containers look similar, but they have unique names and unique ids. 
 
-Stop the most recent container and then check to see what's running.
+Stop one of the 2 containers and then check to see what's running.
 
-`docker stop fd511f9cd896 `
+`docker stop 04f150df58c4 `
 
 Output:
 
 ```bash
-# docker stop fd511f9cd896
-fd511f9cd896
+# docker stop 04f150df58c4
+04f150df58c4
 ```
 
 Then check the container list:
 
-`docker ps | grep couchdb`or `docker ps`
+`docker ps | grep chatibm<xx>`
 
 Output:
 
 ```bash
-# docker ps
-CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                          NAMES
-272d409a806c        couchdb             "tini -- /docker-ent…"   19 minutes ago      Up 19 minutes       4369/tcp, 5984/tcp, 9100/tcp   xenodochial_heisenberg
+# docker ps | grep chatibm99
+2335bedc0fbb        phthom/chatibm99     "/nodejs/bin/node we…"   6 minutes ago       Up 6 minutes        3000/tcp            epic_perlman
 ```
 
-So we still have one running container.
+So we still have one running container remainding in the list.
 
 ​    
 
@@ -292,121 +280,115 @@ So we still have one running container.
 
 Stop the other container and see what is running.
 
- `docker stop 272d409a806c`
+ `docker stop 2335bedc0fbb`
 
- `docker ps | grep couchdb` or `docker ps`
+ `docker ps | grep chatibm<xx>`
 
 Output:
 
 ```bash
-# docker ps
-CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+# docker docker ps | grep chatibm99
+#
 ```
 
-We have no more couchDB running constainer.
+We have no more web server constainer running in your system.
 
  
 
 ### 12. What about the images
 
- Notice that the images still exist.
+ Notice that the images still exist. 
 
- `docker images`
+ `docker images phthom/chatibm<xx>`
 
 Output:
 
 ```bash
-# docker images
+# docker images phthom/chatibm99
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
-couchdb             latest              3bfb066ff4c5        19 hours ago        205MB
-hello-world         latest              fce289e99eb9        3 weeks ago         1.84kB
+phthom/chatibm99     latest              af11a2f8df8a        2 hours ago         82.9MB
 ```
-
->  You can filter the images by they names : `docker images couchdb`   
 
   
 
-### 13. Now remove the couchDB image 
+### 13. Containers are all stopped
 
-Go ahead and delete the couchDB image and double check that it is gone.
+After you stopped all the containers, you cannot see them from docker ps command. You should specify --all or -a to see all the running and all the stopped conatiners.
 
-` docker rmi couchdb`
+Go ahead and look at **stopped** containers:
+
+` docker ps -a | grep phthom/chatibm<xx>`
 
 Output:
 
 ```bash
-# docker rmi couchdb
-Error response from daemon: conflict: unable to remove repository reference "couchdb" (must force) - container 272d409a806c is using its referenced image 3bfb066ff4c5
+# docker ps -a |grep chatibm99
+62914d4f4bce        phthom/chatibm99     "/nodejs/bin/node we…"   9 minutes ago       Exited (137) 13 seconds ago                          crazy_aryabhata
+d0385c0d3a5f        phthom/chatibm99     "/nodejs/bin/node we…"   9 minutes ago       Exited (137) 13 seconds ago                          trusting_yonath
 
 ```
 
-Apparently some stopped containers are still using this images and you can see the ids.
+You will notice that "Exited" status instead of "Up" status previously.
 
-   
+The containers are stopped but they are still there. 
 
-### 14. Oops, it is not working
 
-We can't delete that image until we delete the "couchdb" containers (running or not).
 
-> Note the `docker ps -a` will show us all the containers, not just the ones that are running but also the ones that stopped.
-You will noticed that all containers that you are listing have been stopped. 
+### 14. Remove the web server image
 
-`docker ps -a | grep couchdb`
+`docker rmi phthom/chatibm<xx>`
 
 Output:
 
 ```bash
-# docker ps -a | grep couchdb
-fd511f9cd896        couchdb             "tini -- /docker-ent…"   21 minutes ago      Exited (0) 11 minutes ago                       cocky_jones
-272d409a806c        couchdb             "tini -- /docker-ent…"   29 minutes ago      Exited (0) 7 minutes ago                        xenodochial_heisenberg
+# docker rmi phthom/chatibm99
+Error response from daemon: conflict: unable to remove repository reference "phthom/chatibm99" (must force) - container 1839a39e628a is using its referenced image af11a2f8df8a
 
+```
+
+Even if the all the containers are stopped they are still refering to the image.
+
+Then you should first remove all stopped containers:
+
+`docker rm 62914d4f4bce d0385c0d3a5f`
+
+Output:
+
+```bash
+# docker rm 62914d4f4bce d0385c0d3a5f
+62914d4f4bce 
+d0385c0d3a5f
+```
+
+Then remove the image:
+
+`docker rmi phthom/chatibm<xx>`
+
+Output:
+
+```bash
+# docker rmi phthom/chatibm99
+Untagged: phthom/chatibm99:latest
+Untagged: phthom/chatibm99@sha256:637e36d6120cbe20445a12675ffb7d1d241cd9b398b932a5d79d2a13ebbaec1b
+Deleted: sha256:af11a2f8df8a5fd581b057c76ae5da5f039ccb8c04f44621a87fc6c0e38e8d2c
+Deleted: sha256:08ae8cd14cffc21190fdf62de69ad875f5d9a65ff4346d89dc4c46119a417657
 ```
 
  
 
-### 15. How to remove the image
+### 15.  Image has been removed
 
-Delete the stopped couchdb containers, delete the couchdb image, and make sure it is gone. You can leave hello-world.
+Look again at the remainding container image:
 
-`docker rm fd511f9cd896 272d409a806c `
+`docker images phthom/chatibm<xx> `
 Output:
 
 ```bash
-# docker rm fd511f9cd896 272d409a806c
-fd511f9cd896
-272d409a806c
+# docker images phthom/chatibm99
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
 ```
 
-And use the rmi subcommand to remove the image:
-
- `docker rmi couchdb`
-
-Output:
-
-```bash
-# docker rmi couchdb
-Untagged: couchdb:latest
-Untagged: couchdb@sha256:7f3e6372ff8a87f1a11c63a787ec7dceda85a8fe80005d6c5bbdfa6a6bcde73e
-Deleted: sha256:3bfb066ff4c595317efd3dc672a98b3defce21427947ecb9288ffec6c7040c2b
-Deleted: sha256:24efa375156ab1fe149fd095d21323680c4530f0f64989969d7997d0a32cebc2
-Deleted: sha256:50840db451c21948e918cf3c2db0a89c4ed76f729a8cac419d1e0d745e739fda
-Deleted: sha256:c272e617d5eed77d55fd7073a4c4200d50bf18ea5e35243cbc0ec7745912d065
-Deleted: sha256:f74e6db8d559ada1ff9b71c757b241e429fbc150a8a3f7e007900846ff10c248
-Deleted: sha256:0b9811c169c2edddf0e191a8da18786c781aa24d3ca4d4462fe5dbf345a5f656
-Deleted: sha256:59cd6ba3a99fdece33f78b17ae7d908f684613d6be1a5429dc4290741f578269
-Deleted: sha256:c474aa358b6a6d72574df65d49cc69fec3dd49679c462d0a3d0fc97c4c047b6e
-Deleted: sha256:50f770ebecbd64387b54a687174e0c49097ca322b273d210ebea2635ce617552
-Deleted: sha256:364bb10db37ea4450918268f69022d61d2fc650c4866b8c5847da29c6602e8ba
-Deleted: sha256:a73e1b77a9ebbb952dc8a70fea3a3acfec7a87169ca8ce2f8255c9705994e8d1
-Deleted: sha256:b7d374e01be227502917dab0d981f6018e29519f966bc94d7e70fd5f89850aa5
-Deleted: sha256:3c816b4ead84066ec2cadec2b943993aaacc3fe35fcd77ada3d09dc4f3937313
-```
-
-Notice that all the layers in the image have been gone.  
-
-`docker ps -a | grep couchdb`
-
-***Note:*** Docker images and containers can be referenced by **name** or by **id**. 
+The image has gone.
 
 
 
@@ -431,7 +413,9 @@ First let's create a directory:
 
 `cd images`
 
-`nano Dockerfile`or `notepad Dockerfile` 
+Edit a Dockerfile in that directory with nano (or vi):
+
+`nano Dockerfile`
 
 Now type the following 2 lines:
 
@@ -444,86 +428,92 @@ Replace **yourname** with your name.
 
 Since, a Docker image is nothing but a series of layers built on top of each other, we start with a base image. The FROM command sets the base image for the rest of the instructions. The MAINTAINER command tells who is the author of the generated images. This is a good practice. You could have taken any other base image in the FROM instruction too, for e.g. ubuntu:latest or ubunt:14.04, etc.
 
-**Busybox** is just the set of most of the shell commands. A very light subset of Linux. Busybox as an image has not been pulled yet.
+**alpine** is just the minimal set of  shell commands. A very light subset of Linux. Alpine as an image has not been pulled yet.
 
-Now, **save** the file and come back to the prompt (ctrl O, enter, ctrl X) for nano.
+Now, **save** the file and come back to the prompt (**ctrl O, enter, ctrl X**) for nano.
 
-Execute the following in the /images folder as shown below (don't forget the **dot** at the end):
+Execute the following command in the /images folder as shown below (don't forget to replace <xx>)
 
-`docker build -t myimage:latest .`
+`docker build . -t myimage<xx>:latest`
 
 Result: 
 ``` bash
-# docker build -t myimage:latest .
+# docker build . -t myimage99:latest
 Sending build context to Docker daemon  2.048kB
-Step 1/2 : FROM busybox:latest
-latest: Pulling from library/busybox
-57c14dd66db0: Pull complete 
-Digest: sha256:7964ad52e396a6e045c39b5a44438424ac52e12e4d5a25d94895f2058cb863a0
-Status: Downloaded newer image for busybox:latest
- ---> 3a093384ac30
-Step 2/2 : MAINTAINER yourname
- ---> Running in 97df43af5cdb
-Removing intermediate container 97df43af5cdb
- ---> e50f1efaafdc
-Successfully built e50f1efaafdc
-Successfully tagged myimage:latest
+Step 1/2 : FROM alpine:latest
+latest: Pulling from library/alpine
+cbdbe7a5bc2a: Pull complete 
+Digest: sha256:9a839e63dad54c3a6d1834e29692c8492d93f90c59c978c1ed79109ea4fb9a54
+Status: Downloaded newer image for alpine:latest
+ ---> f70734b6a266
+Step 2/2 : MAINTAINER Philippe
+ ---> Running in 37a2cd393303
+Removing intermediate container 37a2cd393303
+ ---> 955e0a084cfc
+Successfully built 955e0a084cfc
+Successfully tagged myimage99:latest
 ```
 This command is used to build a Docker image. The parameters that we have passed are:
 
 - -t is the Docker image tag. You can give a name to your image and a tag.
-- The second parameter (a ‘.’) specifies the location of the Dockerfile that we created. Since we created the Dockerfile in the same folder in which we are running the docker build, we specified the current directory.
+- The first parameter (a ‘.’) specifies the location of the Dockerfile that we created. Since we created the Dockerfile in the same folder in which we are running the docker build, we specified the current directory.
 
 Notice the various steps that the build process goes through to build out your image.
 
 If you run a docker images command now, you will see the myimage image listed in the output as shown below:
 
-`docker images`
+`docker images myimage<xx>`
 
 ```bash
-# docker images
+# docker images myimage99
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
-myimage             latest              e50f1efaafdc        4 minutes ago       1.2MB
-hello-world         latest              fce289e99eb9        3 weeks ago         1.84kB
-busybox             latest              3a093384ac30        3 weeks ago         1.2MB
+myimage99           latest              955e0a084cfc        3 minutes ago       5.61MB
 ```
 
-You can notice that we have pulled busybox image and created myimage ! The images are very tiny.
+You can notice that we have pulled alpine image and created myimage<xx> ! The images are very tiny.
 
 You can now launch a container, any time via the standard docker run command:
 
-`docker run -it myimage`
+`docker run -it myimage<xx>`
 
 ```bash
-# docker run -it myimage
+# docker run -it myimage99
 / # ls
-bin   dev   etc   home  proc  root  sys   tmp   usr   var
-/ # ps
+bin    dev    etc    home   lib    media  mnt    opt    proc   root   run    sbin   srv    sys    tmp    usr    var
+/ # 
+/ # 
+/ # ps -efa
 PID   USER     TIME  COMMAND
-    1 root      0:00 sh
-    8 root      0:00 ps
+    1 root      0:00 /bin/sh
+    8 root      0:00 ps -efa
+/ # 
+/ # 
 / # exit
 ```
 
-We are entering into the myimage shell (-it parameter). And you can use any shell commands like ls or ps inside the container. Type ***exit*** to come back to the standard shell.
+We are entering into the myimage<xx> shell (-it parameter). And you can use any shell commands like ls or ps inside the container. Type ***exit*** to come back to the standard shell.
 
-`nano Dockerfile`or `notepad Dockerfile` 
+Edit the Dokerfile again:
+
+`nano Dockerfile`
+
+Type the following changes: (to delete a line in nano, use Ctrl+K)
 
 ```console
-FROM busybox:latest
+FROM alpine:latest
 MAINTAINER yourname
 CMD ["date"]
 ```
 
 Then build and run the myimage container:
 
-`docker build -t myimage:latest .`
+`docker build -t myimage<xx>:latest .`
 
-`docker run -it myimage`
+`docker run myimage<xx>`
 
 ```bash
-# docker run -it myimage
-Mon Apr 16 12:44:10 UTC 2018
+# docker run myimage99
+Fri May 15 12:13:50 UTC 2020
 ```
 
 
@@ -538,7 +528,7 @@ In fact, while launching the container, you can override the default CMD by prov
 Change your Dockerfile to the following:
 
 ```console
-FROM busybox
+FROM alpine
 MAINTAINER myname
 ENTRYPOINT ["/bin/cat"]
 CMD ["/etc/passwd"]
@@ -546,12 +536,12 @@ CMD ["/etc/passwd"]
 
 Save, **Build** and re-rerun myimage. 
 
-`docker build -t myimage:latest .`
+`docker build -t myimage<xx>:latest .`
 
-`docker run -it myimage`
+`docker run myimage<xx>`
 
 ```bash
-# docker run -it myimage
+# docker run myimage99
 root:x:0:0:root:/root:/bin/sh
 daemon:x:1:1:daemon:/usr/sbin:/bin/false
 bin:x:2:2:bin:/bin:/bin/false
@@ -590,24 +580,41 @@ Here are the steps:
 
 `cd webapp`
 
-`nano Dockerfile` or `notepad Dockerfile`
+`nano Dockerfile`
 
-Now copy and paste the Dockerfile text (see above). Save the file.
+Now copy and paste the Dockerfile text (see above). Save the file with Ctrl+O, Enter, Ctrl+X  for nano editor. 
 
-`docker build . -t myimage:latest`
+`docker build . -t myimage<xx>:latest`
 
-`docker run -d -p 8081:80 --name webserver myimage`
+> IMPORTANT : because we are all running on the same VM, choose a different port to get access to the nginx container. Use your <xx> number to build the port 80<xx>.
+
+`docker run -d -p 80<xx>:80 --name webserver<xx> myimage<xx>`
+
+Check that the container is running:
+
+`docker ps |grep webserver<xx>`
+
+Result:
+
+```bash
+# docker ps |grep webserver99
+fb0add490db5        myimage99           "/usr/sbin/nginx -g …"   About a minute ago   Up About a minute   0.0.0.0:8099->80/tcp   webserver99
+```
+
+
+
+Verify that the image, the name and the port contains the <xx> same number.
 
 To use your application, you have 2 possibilities:
 
 You can use **curl**:
 
-`curl http://localhost:8081`
+`curl http://localhost:80<xx>`
 
 Results :
 
 ```bash
-# curl http://localhost:8081
+# curl http://localhost:8099
 <!DOCTYPE html>
 <html>
 <head>
@@ -633,17 +640,17 @@ Commercial support is available at
 </html>
 ```
 
-Or on the VM, type the following command to 
+Or on the VM, type the following command to find the external **public IP address**:
 
-`echo $IPADDRESS`
+`curl ifconfig.co`
 
-Then on your browser, use the following link where ipaddress is the ip address of the Linux VM:
+Then on your browser, use the following link where <ipaddress> is the ip address of the Linux VM:
 
-http://<ipaddress>:8081/
+http://<ipaddress>:80<xx>/
 
 or if Docker is running on your laptop:
 
-http://localhost:8081/
+http://localhost:80<xx>/
 
 ![Launching the web server](./images/nginx2.png)
 
@@ -653,18 +660,18 @@ http://localhost:8081/
 
 To troubleshoot your container or your application, you may want to go inside the container to look at some logs or to see the processes.
 
-`docker exec -it webserver "/bin/bash"`
+`docker exec -it webserver<xx> "/bin/bash"`
 
 > -it : this concerns the interation with the container by using a bash shell.
 >
 > A prompt with the container id will be returned to you like : **root@cc88b7536a57:/#**
 >
-> You can then type any kind of linux commands that are parts of the image.
+> You can then type some kind of linux commands that are parts of the image.
 
 Output:
 
 ```bash
-# docker exec -it webserver "/bin/bash"
+# docker exec -it webserver99 "/bin/bash"
 root@cc88b7536a57:/# 
 root@cc88b7536a57:/# 
 root@cc88b7536a57:/# ll
@@ -691,7 +698,7 @@ dr-xr-xr-x  13 root root    0 Nov 30 14:59 sys/
 drwxrwxrwt   1 root root 4096 Nov 30 14:58 tmp/
 drwxr-xr-x   1 root root 4096 Nov 12 20:54 usr/
 drwxr-xr-x   1 root root 4096 Nov 30 14:58 var/
-root@cc88b7536a57:/# ps -ef
+root@cc88b7536a57:/# ps -efa
 UID        PID  PPID  C STIME TTY          TIME CMD
 root         1     0  0 14:59 ?        00:00:00 nginx: master process /usr/sbin/
 www-data     7     1  0 14:59 ?        00:00:00 nginx: worker process
@@ -712,11 +719,150 @@ Don't forget to **exit** from the container:
 
 `# exit`
 
+### 3. Building a distroless image
+
+Now, let try to reduce the **size** of the image and improve the **security** of the container by using "distoless" or distribution less images. In those images, you will only get the layers that are mandatory to run your application (a runtime and your code). No other libraries coming with the Linux distribution. 
+
+First we are going to create a **fat image**:
+
+Here are the steps:
+
+`cd`
+
+`mkdir distro`
+
+`cd distro`
+
+`nano Dockerfile`  
+
+Then type the following instructions :
+
+```
+FROM node:10.17.0
+ADD . /app
+WORKDIR /app
+RUN npm install --production
+EXPOSE 3000
+CMD ["distro.js"]
+```
+
+Notice that we use a quite big image node:10.17.0. We will see the size in a moment.
+
+Then create a file called **distro.js** in the same directory.
+
+```
+const express = require('express')
+const app = express()
+const port = 3000
+app.get('/', (req, res) => res.send('Say Hello to IBM Clouds'))
+app.listen(port, () => console.log(`App listening on port ${port}!`))
+
+```
+
+And another file **package.json** (Thanks to Google) concerning the libraries and dependencies.
+
+ ```
+{
+  "name": "distroless-express",
+  "version": "1.0.0",
+  "description": "Distroless express node.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GoogleContainerTools/distroless.git"
+  },
+  "dependencies": {
+    "express": "4.16.3"
+  },
+  "author": "Bryant Hagadorn",
+  "license": "ISC"
+}
+ ```
+
+Now your directory should look like:
+
+```bash
+# ls -al
+total 20
+drwxr-xr-x 2 labuser99 labuser99 4096 May 15 13:01 .
+drwxr-xr-x 5 labuser99 labuser99 4096 May 15 11:55 ..
+-rw-r--r-- 1 labuser99 labuser99  114 May 15 12:53 Dockerfile
+-rw-r--r-- 1 labuser99 labuser99  211 May 15 13:01 distro.js
+-rw-r--r-- 1 labuser99 labuser99  314 May 15 13:00 package.json
+```
+
+Now build you fat image: 
+
+`docker build . -t fat<xx>:latest`
+
+`docker images fat<xx>:latest`
+
+Results:
+
+```
+docker images fat99:latest
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+fat99               latest              e885a2060ae0        22 seconds ago      907MB
+
+```
+
+Check the **size** of the image :
+
+# 907 MB
+
+Now here is the *magic*, change your Dockerfile with the following instructions:
+
+```
+FROM node:10.17.0 AS build-env
+ADD . /app
+WORKDIR /app
+RUN npm install --production
+
+FROM gcr.io/distroless/nodejs
+COPY --from=build-env /app /app
+WORKDIR /app
+EXPOSE 3000
+CMD ["distro.js"]
+
+```
+
+We have 2 parts (2 FROM) in the Dockerfile : part one is where you can put all the layers that you want (often 20 or 30 layers) and part two is where you are going to "shrink" all these layers into one layer (with the COPY instruction). 
+
+Now, let's build a new "slim image" !
+
+`docker build . -t slim<xx>:latest`
+
+`docker images slim<xx>:latest`
+
+Check the size of that image:
+
+```bash
+# docker images slim99:latest
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+slim99              latest              71563c41193a        23 seconds ago      82.9MB
+```
+
+Look at this crazy size (10 times less than the fat image) for the same goal. 
+
+# 82 MB
+
+Optionnaly you can run that image :
+
+`docker run -d -p 81<xx>:3000 --name slimfast<xx> slim<xx>`
+
+And then get access with curl:
+
+```bash
+# curl http://localhost:81<xx> 
+Say Hello to IBM Clouds
+```
+
+
+
 
 
 ## Conclusion
 
-**Congratulations**, you have successfully completed this Containers lab !  You've just build and run your first Docker-based web app !  In this lab, you learned how to build and run images on docker on your laptop.
+**Congratulations**, you have successfully completed this Containers lab !  You've just build and run your first Docker-based web app !  In this lab, you learned how to build and run images on docker on your laptop. And also you have used distroless image implementation !
 
 
 
