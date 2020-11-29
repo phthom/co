@@ -646,19 +646,11 @@ Or on the VM, type the following command to find the external **public IP addres
 
 Then on your browser, use the following link where <ipaddress> is the ip address of the Linux VM:
 
-```http
 http://<ipaddress>:80<xx>/
-```
-
-
 
 or if Docker is running on your laptop:
 
-```http
 http://localhost:80<xx>/
-```
-
-
 
 ![Launching the web server](./images/nginx2.png)
 
