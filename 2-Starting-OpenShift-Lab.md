@@ -132,7 +132,7 @@ If you use **MacOS** or **Linux**, complete the following steps to add the binar
 
 
 
-### 3. Check the OC command
+### Task #4 - Check the OC command
 
 To use the oc command, you normally need to use a login with user and password or a token.
 
@@ -228,7 +228,7 @@ Now you are ready to go thru the exercises.
 
 
 
-## Task #4 - Deploy some code
+## Task #5 - Deploy some code
 
 Now go back to the Web UI and deploy your first application.
 
