@@ -1,4 +1,4 @@
-# OpenShift Web Console & CLI Labs
+# OpenShift Lab
 
 
 
